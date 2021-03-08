@@ -23,11 +23,10 @@ function NewProject() {
 
   const onSubmitProject = (e) => {
     e.preventDefault();
+    if (name) setProject(name);
   };
 
   const handleClick = () => showProjectForm();
-
-  const handleSetProject = () => setProject(name);
 
   return (
     <>
@@ -52,7 +51,6 @@ function NewProject() {
             type="submit"
             className="btn btn-block btn-primario"
             value="Agregar Proyecto"
-            onClick={handleSetProject}
           />
         </form>
       ) : null}
