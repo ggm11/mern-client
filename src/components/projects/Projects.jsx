@@ -1,6 +1,18 @@
+import Sidebar from '../layout/Sidebar';
+import Bar from '../layout/Bar';
+
 function Projects() {
-    return <h1>Projects</h1>;
-  }
-  
-  export default Projects;
-  
+  return (
+    <div className="contenedor-app">
+      <Sidebar />
+      <div className="seccion-principal">
+        <Bar />
+        <main>
+          <div className="contenedor-tareas"></div>
+        </main>
+      </div>
+    </div>
+  );
+}
+
+export default Projects;
