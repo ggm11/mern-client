@@ -1,5 +1,8 @@
+// components
 import Sidebar from '../layout/Sidebar';
 import Bar from '../layout/Bar';
+import TaskForm from '../tasks/TaskForm';
+import TaskList from '../tasks/TaskList';
 
 function Projects() {
   return (
@@ -8,7 +11,10 @@ function Projects() {
       <div className="seccion-principal">
         <Bar />
         <main>
-          <div className="contenedor-tareas"></div>
+          <TaskForm />
+          <div className="contenedor-tareas">
+            <TaskList />
+          </div>
         </main>
       </div>
     </div>
