@@ -16,12 +16,12 @@ function TaskList() {
             <p>No hay tareas</p>
           </li>
         ) : (
-          projectTasks.map((task) => <Task task={task} />)
+          projectTasks.map((task, index) => <Task key={index} task={task} />)
         )}
-        <button type="button" className="btn btn-eliminar">
-          Eliminar Proyecto &times;
-        </button>
       </ul>
+      <button type="button" className="btn btn-eliminar">
+        Eliminar Proyecto &times;
+      </button>
     </>
   );
 }

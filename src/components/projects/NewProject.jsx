@@ -1,15 +1,22 @@
-import { useState } from 'react';
+// vendors
+import { useContext, useState } from 'react';
+
+// context
+import projectContext from '../../context/projects/projectContext';
 
 function NewProject() {
-  const [project, setProject] = useState({
+  const projectCxt = useContext(projectContext);
+  const { form, showProjectForm, setProject } = projectCxt;
+
+  const [projectName, setProjectName] = useState({
     name: '',
   });
 
-  const { name } = project;
+  const { name } = projectName;
 
   const handleOnChangeProject = (e) => {
-    setProject({
-      ...project,
+    setProjectName({
+      ...projectName,
       [e.target.name]: e.target.value,
     });
   };
@@ -18,26 +25,37 @@ function NewProject() {
     e.preventDefault();
   };
 
+  const handleClick = () => showProjectForm();
+
+  const handleSetProject = () => setProject(name);
+
   return (
     <>
-      <button type="button" className="btn btn-block btn-primario">
+      <button
+        type="button"
+        className="btn btn-block btn-primario"
+        onClick={handleClick}
+      >
         Nuevo proyecto
       </button>
-      <form className="formulario-nuevo-proyecto" onSubmit={onSubmitProject}>
-        <input
-          type="text"
-          className="input-text"
-          placeholder="Nombre proyecto"
-          name="name"
-          value={name}
-          onChange={handleOnChangeProject}
-        />
-        <input
-          type="submit"
-          className="btn btn-block btn-primario"
-          value="Agregar Proyecto"
-        />
-      </form>
+      {form ? (
+        <form className="formulario-nuevo-proyecto" onSubmit={onSubmitProject}>
+          <input
+            type="text"
+            className="input-text"
+            placeholder="Nombre proyecto"
+            name="name"
+            value={name}
+            onChange={handleOnChangeProject}
+          />
+          <input
+            type="submit"
+            className="btn btn-block btn-primario"
+            value="Agregar Proyecto"
+            onClick={handleSetProject}
+          />
+        </form>
+      ) : null}
     </>
   );
 }

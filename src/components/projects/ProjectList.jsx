@@ -1,15 +1,28 @@
+// vendors
+import { useContext, useEffect } from 'react';
+
+// components
 import Project from './Project';
 
+// context
+import projectContext from '../../context/projects/projectContext';
+
 function ProjectList() {
-  const projects = [
-    { name: 'Tienda Virtual' },
-    { name: 'Intranet' },
-    { name: 'Diseno de Sitio web' },
-  ];
+  const projectCxt = useContext(projectContext);
+  const { projects, getProjects } = projectCxt;
+
+  // TODO: REMOVE THIS ESLINTER
+  /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    getProjects();
+  }, []);
+
+  if (projects.length === 0) return null;
+
   return (
     <ul className="listado-proyectos">
       {projects.map((project) => (
-        <Project project={project} />
+        <Project key={project.id} project={project} />
       ))}
     </ul>
   );
