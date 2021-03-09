@@ -12,7 +12,6 @@ import {
   PROJECT_GET_PROJECTS,
   PROJECT_SET_PROJECT,
   PROJECT_NAME_EMPTY_ALERT,
-  PROJECT_RESET_NAME_EMPTY_ALERT,
 } from '../../types';
 
 const projects = [
@@ -40,8 +39,6 @@ const ProjectState = (props) => {
     dispatch({ type: PROJECT_SET_PROJECT, payload: { id: uuidv4(), name } });
 
   const setNameIsEmpty = () => dispatch({ type: PROJECT_NAME_EMPTY_ALERT });
-  const resetEmptyNameAlert = () =>
-    dispatch({ type: PROJECT_RESET_NAME_EMPTY_ALERT });
 
   return (
     <projectContext.Provider
@@ -53,7 +50,6 @@ const ProjectState = (props) => {
         getProjects,
         setProject,
         setNameIsEmpty,
-        resetEmptyNameAlert,
       }}
     >
       {props.children}

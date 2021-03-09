@@ -351,4 +351,5 @@ aside {
 .alerta-error {
   background-color: rgb(230, 78, 78);
   color: var(--blanco);
+  font-size: 16px;
 }

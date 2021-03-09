@@ -12,7 +12,6 @@ function NewProject() {
     setProject,
     setNameIsEmpty,
     isNameEmpty,
-    resetEmptyNameAlert,
   } = projectCxt;
 
   const [projectName, setProjectName] = useState({
@@ -30,10 +29,12 @@ function NewProject() {
 
   const onSubmitProject = (e) => {
     e.preventDefault();
-    if (name === '') return setNameIsEmpty();
+    if (name === '') {
+      setNameIsEmpty();
+      return null;
+    }
     setProject(name);
     setProjectName({ name: '' });
-    resetEmptyNameAlert();
   };
 
   const handleClick = () => showProjectForm();
@@ -64,7 +65,9 @@ function NewProject() {
           />
         </form>
       ) : null}
-      {isNameEmpty && <div>El nombre del proyecto no puede estar vacio</div>}
+      {isNameEmpty ? (
+        <p className="alerta-error">El nombre del proyecto es obligatorio</p>
+      ) : null}
     </>
   );
 }
