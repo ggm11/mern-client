@@ -2,6 +2,8 @@ import {
   PROJECT_FORM_VISIBILITY,
   PROJECT_GET_PROJECTS,
   PROJECT_SET_PROJECT,
+  PROJECT_NAME_EMPTY_ALERT,
+  PROJECT_RESET_NAME_EMPTY_ALERT,
 } from '../../types';
 
 const projectReducer = (state, action) => {
@@ -14,6 +16,17 @@ const projectReducer = (state, action) => {
       return {
         ...state,
         projects: [...state.projects, action.payload],
+        form: false,
+      };
+    case PROJECT_NAME_EMPTY_ALERT:
+      return {
+        ...state,
+        isNameEmpty: true,
+      };
+    case PROJECT_RESET_NAME_EMPTY_ALERT:
+      return {
+        ...state,
+        isNameEmpty: false,
       };
     default:
       return state;

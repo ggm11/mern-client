@@ -6,7 +6,14 @@ import projectContext from '../../context/projects/projectContext';
 
 function NewProject() {
   const projectCxt = useContext(projectContext);
-  const { form, showProjectForm, setProject } = projectCxt;
+  const {
+    form,
+    showProjectForm,
+    setProject,
+    setNameIsEmpty,
+    isNameEmpty,
+    resetEmptyNameAlert,
+  } = projectCxt;
 
   const [projectName, setProjectName] = useState({
     name: '',
@@ -23,7 +30,10 @@ function NewProject() {
 
   const onSubmitProject = (e) => {
     e.preventDefault();
-    if (name) setProject(name);
+    if (name === '') return setNameIsEmpty();
+    setProject(name);
+    setProjectName({ name: '' });
+    resetEmptyNameAlert();
   };
 
   const handleClick = () => showProjectForm();
@@ -54,6 +64,7 @@ function NewProject() {
           />
         </form>
       ) : null}
+      {isNameEmpty && <div>El nombre del proyecto no puede estar vacio</div>}
     </>
   );
 }

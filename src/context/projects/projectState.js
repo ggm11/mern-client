@@ -11,6 +11,8 @@ import {
   PROJECT_FORM_VISIBILITY,
   PROJECT_GET_PROJECTS,
   PROJECT_SET_PROJECT,
+  PROJECT_NAME_EMPTY_ALERT,
+  PROJECT_RESET_NAME_EMPTY_ALERT,
 } from '../../types';
 
 const projects = [
@@ -24,21 +26,22 @@ const ProjectState = (props) => {
   const initialState = {
     form: false,
     projects: [],
+    isNameEmpty: false,
   };
 
   const [state, dispatch] = useReducer(projectReducer, initialState);
 
-  const showProjectForm = () => {
-    dispatch({ type: PROJECT_FORM_VISIBILITY });
-  };
+  const showProjectForm = () => dispatch({ type: PROJECT_FORM_VISIBILITY });
 
-  const getProjects = () => {
+  const getProjects = () =>
     dispatch({ type: PROJECT_GET_PROJECTS, payload: projects });
-  };
 
-  const setProject = (name) => {
+  const setProject = (name) =>
     dispatch({ type: PROJECT_SET_PROJECT, payload: { id: uuidv4(), name } });
-  };
+
+  const setNameIsEmpty = () => dispatch({ type: PROJECT_NAME_EMPTY_ALERT });
+  const resetEmptyNameAlert = () =>
+    dispatch({ type: PROJECT_RESET_NAME_EMPTY_ALERT });
 
   return (
     <projectContext.Provider
@@ -46,8 +49,11 @@ const ProjectState = (props) => {
         form: state.form,
         projects: state.projects,
         showProjectForm,
+        isNameEmpty: state.isNameEmpty,
         getProjects,
         setProject,
+        setNameIsEmpty,
+        resetEmptyNameAlert,
       }}
     >
       {props.children}
