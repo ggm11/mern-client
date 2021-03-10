@@ -12,6 +12,7 @@ import {
   PROJECT_GET_PROJECTS,
   PROJECT_SET_PROJECT,
   PROJECT_NAME_EMPTY_ALERT,
+  PROJECT_SELECTED_PROJECT,
 } from '../../types';
 
 const projects = [
@@ -26,6 +27,7 @@ const ProjectState = (props) => {
     form: false,
     projects: [],
     isNameEmpty: false,
+    selectedProject: null,
   };
 
   const [state, dispatch] = useReducer(projectReducer, initialState);
@@ -40,6 +42,9 @@ const ProjectState = (props) => {
 
   const setNameIsEmpty = () => dispatch({ type: PROJECT_NAME_EMPTY_ALERT });
 
+  const setSelectedProject = (projectId) =>
+    dispatch({ type: PROJECT_SELECTED_PROJECT, payload: projectId });
+
   return (
     <projectContext.Provider
       value={{
@@ -47,9 +52,11 @@ const ProjectState = (props) => {
         projects: state.projects,
         showProjectForm,
         isNameEmpty: state.isNameEmpty,
+        selectedProject: state.selectedProject,
         getProjects,
         setProject,
         setNameIsEmpty,
+        setSelectedProject,
       }}
     >
       {props.children}

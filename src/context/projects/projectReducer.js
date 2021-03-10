@@ -3,6 +3,7 @@ import {
   PROJECT_GET_PROJECTS,
   PROJECT_SET_PROJECT,
   PROJECT_NAME_EMPTY_ALERT,
+  PROJECT_SELECTED_PROJECT,
 } from '../../types';
 
 const projectReducer = (state, action) => {
@@ -22,6 +23,13 @@ const projectReducer = (state, action) => {
       return {
         ...state,
         isNameEmpty: true,
+      };
+    case PROJECT_SELECTED_PROJECT:
+      return {
+        ...state,
+        selectedProject: state.projects.filter(
+          (project) => project.id === action.payload
+        ),
       };
     default:
       return state;
