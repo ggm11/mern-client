@@ -2,8 +2,10 @@
 import { useReducer } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-// utils
+// context
 import projectContext from './projectContext';
+
+// reducer
 import projectReducer from './projectReducer';
 
 // constants

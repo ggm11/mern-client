@@ -1,3 +1,4 @@
+// types
 import {
   PROJECT_FORM_VISIBILITY,
   PROJECT_GET_PROJECTS,

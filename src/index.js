@@ -1,7 +1,14 @@
+// vendors
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+//styles
 import './index.css';
+
+// components
 import App from './App';
+
+// utils
 import reportWebVitals from './reportWebVitals';
 
 // Deleted Strict mode deprecated with css transition

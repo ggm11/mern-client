@@ -4,6 +4,7 @@ import { useContext } from 'react';
 // context
 import projectContext from '../../context/projects/projectContext';
 import taskContext from '../../context/tasks/taskContext';
+
 function Project({ project }) {
   const projectCxt = useContext(projectContext);
   const taskCxt = useContext(taskContext);
