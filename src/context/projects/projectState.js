@@ -13,6 +13,7 @@ import {
   PROJECT_SET_PROJECT,
   PROJECT_NAME_EMPTY_ALERT,
   PROJECT_SELECTED_PROJECT,
+  PROJECT_DELETE_PROJECT,
 } from '../../types';
 
 const projects = [
@@ -45,6 +46,9 @@ const ProjectState = (props) => {
   const setSelectedProject = (projectId) =>
     dispatch({ type: PROJECT_SELECTED_PROJECT, payload: projectId });
 
+  const deleteProject = (projectId) =>
+    dispatch({ type: PROJECT_DELETE_PROJECT, payload: projectId });
+
   return (
     <projectContext.Provider
       value={{
@@ -57,6 +61,7 @@ const ProjectState = (props) => {
         setProject,
         setNameIsEmpty,
         setSelectedProject,
+        deleteProject,
       }}
     >
       {props.children}

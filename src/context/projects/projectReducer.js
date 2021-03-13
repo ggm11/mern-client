@@ -4,6 +4,7 @@ import {
   PROJECT_SET_PROJECT,
   PROJECT_NAME_EMPTY_ALERT,
   PROJECT_SELECTED_PROJECT,
+  PROJECT_DELETE_PROJECT,
 } from '../../types';
 
 const projectReducer = (state, action) => {
@@ -30,6 +31,12 @@ const projectReducer = (state, action) => {
         selectedProject: state.projects.filter(
           (project) => project.id === action.payload
         ),
+      };
+    case PROJECT_DELETE_PROJECT:
+      return {
+        ...state,
+        selectedProject: null,
+        projects: state.projects.filter(({ id }) => id !== action.payload),
       };
     default:
       return state;
