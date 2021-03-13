@@ -1,5 +1,6 @@
 // vendors
 import { useContext } from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 // components
 import Task from './Task';
@@ -32,9 +33,13 @@ function TaskList() {
               <p>No hay tareas</p>
             </li>
           ) : (
-            tasksBySelectedProject.map((task, index) => (
-              <Task key={index} task={task} />
-            ))
+            <TransitionGroup>
+              {tasksBySelectedProject.map((task) => (
+                <CSSTransition timeout={200} classNames="tarea" key={task.id}>
+                  <Task task={task} />
+                </CSSTransition>
+              ))}
+            </TransitionGroup>
           )}
         </ul>
         <button

@@ -4,6 +4,10 @@ import {
   TASK_CREATE_TASK,
   TASK_VALIDATE_TASK,
   TASK_DELETE_TASK,
+  TASK_CHANGE_TASK_STATE,
+  TASK_CURRENT_TASK,
+  TASK_UPDATE_TASK,
+  TASK_RESET_CURRENT_TASK,
 } from '../../types';
 
 const taskReducer = (state, action) => {
@@ -18,11 +22,7 @@ const taskReducer = (state, action) => {
     case TASK_CREATE_TASK:
       return {
         ...state,
-        tasks: [...state.tasks, action.payload],
-        tasksBySelectedProject: [
-          ...state.tasksBySelectedProject,
-          action.payload,
-        ],
+        tasks: [action.payload, ...state.tasks],
         taskError: false,
       };
     case TASK_VALIDATE_TASK:
@@ -34,8 +34,38 @@ const taskReducer = (state, action) => {
       return {
         ...state,
         tasksBySelectedProject: state.tasksBySelectedProject.filter(
-          (task) => task.id !== action.payload.id
+          (task) => task.id !== action.payload
         ),
+        tasks: state.tasks.filter((task) => task.id !== action.payload),
+      };
+    case TASK_CHANGE_TASK_STATE:
+      return {
+        ...state,
+        tasksBySelectedProject: state.tasksBySelectedProject.map((task) =>
+          task.id === action.payload.id ? { ...task, state: !task.state } : task
+        ),
+        tasks: state.tasks.map((task) =>
+          task.id === action.payload.id ? { ...task, state: !task.state } : task
+        ),
+      };
+    case TASK_CURRENT_TASK:
+      return {
+        ...state,
+        currentTask: action.payload,
+      };
+    case TASK_UPDATE_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.map((task) =>
+          task.id === action.payload.id
+            ? { ...task, name: action.payload.name }
+            : task
+        ),
+      };
+    case TASK_RESET_CURRENT_TASK:
+      return {
+        ...state,
+        currentTask: null,
       };
     default:
       return state;

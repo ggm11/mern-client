@@ -1,5 +1,5 @@
 // vendors
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 // context
 import projectContext from '../../context/projects/projectContext';
@@ -10,7 +10,23 @@ function TaskForm() {
   const { selectedProject } = projectCxt;
 
   const taskCxt = useContext(taskContext);
-  const { taskError, createTask, validateTask } = taskCxt;
+  const {
+    taskError,
+    createTask,
+    validateTask,
+    getTasksById,
+    currentTask,
+    updateTask,
+    resetCurrentTask,
+  } = taskCxt;
+
+  useEffect(() => {
+    if (currentTask) {
+      setTask(currentTask.name);
+    } else {
+      setTask('');
+    }
+  }, [currentTask]);
 
   const [task, setTask] = useState('');
 
@@ -27,7 +43,15 @@ function TaskForm() {
     }
 
     const [selected] = selectedProject;
-    createTask({ task, projectId: selected.id });
+
+    if (currentTask === null) {
+      createTask({ task, projectId: selected.id });
+    } else {
+      updateTask({ ...currentTask, name: task });
+      resetCurrentTask();
+    }
+
+    getTasksById(selected.id);
     setTask('');
   };
 
@@ -48,7 +72,7 @@ function TaskForm() {
           <input
             type="submit"
             className="btn btn-primario btn-submit btn-block"
-            value="Agregar Tarea"
+            value={currentTask ? 'Editar Tarea' : 'Agregar Tarea'}
           />
         </div>
       </form>
