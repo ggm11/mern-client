@@ -18,7 +18,7 @@ import {
   PROJECT_DELETE_PROJECT,
 } from '../../types';
 
-const projects = [
+const projectsHc = [
   { id: 1, name: 'Tienda Virtual' },
   { id: 2, name: 'Intranet' },
   { id: 3, name: 'Diseno de Sitio web' },
@@ -38,7 +38,7 @@ const ProjectState = (props) => {
   const showProjectForm = () => dispatch({ type: PROJECT_FORM_VISIBILITY });
 
   const getProjects = () =>
-    dispatch({ type: PROJECT_GET_PROJECTS, payload: projects });
+    dispatch({ type: PROJECT_GET_PROJECTS, payload: projectsHc });
 
   const setProject = (name) =>
     dispatch({ type: PROJECT_SET_PROJECT, payload: { id: uuidv4(), name } });
@@ -51,14 +51,16 @@ const ProjectState = (props) => {
   const deleteProject = (projectId) =>
     dispatch({ type: PROJECT_DELETE_PROJECT, payload: projectId });
 
+  const { projects, form, isNameEmpty, selectedProject } = state;
+
   return (
     <projectContext.Provider
       value={{
-        form: state.form,
-        projects: state.projects,
+        form,
+        projects,
         showProjectForm,
-        isNameEmpty: state.isNameEmpty,
-        selectedProject: state.selectedProject,
+        isNameEmpty,
+        selectedProject,
         getProjects,
         setProject,
         setNameIsEmpty,
