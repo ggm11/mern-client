@@ -6,13 +6,14 @@ import authReducer from './authReducer';
 import {
   AUTH_REGISTRY_OK,
   AUTH_REGISTRY_ERROR,
-  // AUTH_GET_USER,
+  AUTH_GET_USER,
   // AUTH_LOGIN_OK,
-  // AUTH_LOGIN_ERROR,
+  AUTH_LOGIN_ERROR,
   // AUTH_CLOSE_SESSION,
 } from '../../types';
 // clients
 import axiosClient from '../../config/axios';
+import authToken from '../../config/authToken';
 
 const AuthState = (props) => {
   const initialState = {
@@ -26,14 +27,35 @@ const AuthState = (props) => {
   const registryUser = async (data) => {
     try {
       const response = await axiosClient.post('/api/users', data);
-      console.log(response);
       dispatch({
         type: AUTH_REGISTRY_OK,
+        payload: response.data,
       });
+      userAuthenticated();
     } catch (error) {
-      console.log(error);
+      const alert = { msg: error.response.data.msg, category: 'error-alert' };
       dispatch({
         type: AUTH_REGISTRY_ERROR,
+        payload: alert,
+      });
+    }
+  };
+
+  const userAuthenticated = async () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      authToken(token);
+    }
+
+    try {
+      const response = await axiosClient.get('/api/auth');
+      dispatch({
+        type: AUTH_GET_USER,
+        payload: response.data.user,
+      });
+    } catch (error) {
+      dispatch({
+        type: AUTH_LOGIN_ERROR,
       });
     }
   };

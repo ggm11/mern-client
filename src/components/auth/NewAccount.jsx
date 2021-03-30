@@ -1,19 +1,29 @@
 // vendors
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 // context
 import alertContext from '../../context/alerts/alertContext';
 import authContext from '../../context/authentication/authContext';
 
-function NewAccount() {
+function NewAccount(props) {
   const alertCxt = useContext(alertContext);
 
   const { alert, showAlert } = alertCxt;
 
   const authCxt = useContext(authContext);
 
-  const { registryUser } = authCxt;
+  const { registryUser, message, authenticated } = authCxt;
+
+  useEffect(() => {
+    if (authenticated) {
+      props.history.push('/projects');
+    }
+    if (message) {
+      showAlert(message.msg, message.category);
+    }
+    // eslint-disable-next-line
+  }, [message, authenticated, props.history]);
 
   const [user, setUser] = useState({
     name: '',
